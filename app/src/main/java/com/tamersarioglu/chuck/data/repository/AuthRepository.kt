@@ -15,9 +15,7 @@ class AuthRepository @Inject constructor(
 ) {
     val isLoggedIn: Flow<Boolean> = userPreferencesDataStore.isLoggedIn
     val userEmail: Flow<String> = userPreferencesDataStore.userEmail
-
     suspend fun login(loginRequest: LoginRequest): Result<Boolean> {
-
         return try {
             if (!isValidEmail(email = loginRequest.email)) return Result.failure(Exception("Invalid email format"))
             if (loginRequest.password.isBlank()) return Result.failure(Exception("Password cannot be empty"))
@@ -28,7 +26,6 @@ class AuthRepository @Inject constructor(
                 "AuthRepository",
                 "Login attempt: ${loginRequest.email}, ${loginRequest.password}"
             )
-
             when (storedCredentials) {
                 null -> {
                     Log.d("AuthRepository", "No stored credentials found")
@@ -75,14 +72,20 @@ class AuthRepository @Inject constructor(
                 !isValidEmail(registerRequest.email) -> {
                     Result.failure(Exception("Invalid email format"))
                 }
+
                 registerRequest.password.length < 6 -> {
                     Result.failure(Exception("Password must be at least 6 characters"))
                 }
+
                 registerRequest.password != registerRequest.confirmPassword -> {
                     Result.failure(Exception("Passwords do not match"))
                 }
+
                 else -> {
-                    Log.d("AuthRepository", "Registering user: ${registerRequest.email}, ${registerRequest.password}")
+                    Log.d(
+                        "AuthRepository",
+                        "Registering user: ${registerRequest.email}, ${registerRequest.password}"
+                    )
                     userPreferencesDataStore.saveUserCredentials(
                         email = registerRequest.email,
                         password = registerRequest.password

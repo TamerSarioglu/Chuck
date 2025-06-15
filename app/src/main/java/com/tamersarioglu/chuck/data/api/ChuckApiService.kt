@@ -22,5 +22,4 @@ interface ChuckApiService {
     suspend fun searchJokes(
         @Query("query") query: String,
     ): SearchResponse
-
 }

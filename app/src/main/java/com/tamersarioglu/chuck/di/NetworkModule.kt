@@ -53,5 +53,4 @@ object NetworkModule {
     fun provideChuckApiService(retrofit: Retrofit): ChuckApiService {
         return retrofit.create(ChuckApiService::class.java)
     }
-
 }

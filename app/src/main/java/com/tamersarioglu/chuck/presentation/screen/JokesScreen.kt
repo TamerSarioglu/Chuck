@@ -28,13 +28,14 @@ import coil3.request.crossfade
 import com.tamersarioglu.chuck.domain.model.JokeUI
 import com.tamersarioglu.chuck.presentation.model.UiState
 import com.tamersarioglu.chuck.presentation.viewmodel.JokesViewModel
+import com.tamersarioglu.chuck.presentation.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JokesScreen(
     viewModel: JokesViewModel = hiltViewModel(),
-    onNavigateToSearch: () -> Unit = {},
-    onLogout: () -> Unit = {}
+    authViewModel: AuthViewModel = hiltViewModel(),
+    onNavigateToSearch: () -> Unit = {}
 ) {
     val jokeUiState by viewModel.jokeUiState.collectAsStateWithLifecycle()
     val categoriesUiState by viewModel.categoriesUiState.collectAsStateWithLifecycle()
@@ -84,7 +85,7 @@ fun JokesScreen(
                 }
 
                 IconButton(
-                    onClick = onLogout
+                    onClick = { authViewModel.logout() }
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ExitToApp,

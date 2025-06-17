@@ -181,7 +181,7 @@ fun JokesScreen(
                     joke = joke.data,
                     onNewJoke = {
                         if (selectedCategory != null) {
-                            viewModel.loadRandomJokeByCategory(selectedCategory!!)
+                            viewModel.loadRandomJokeByCategory(selectedCategory ?: "")
                         } else {
                             viewModel.loadRandomJoke()
                         }
